@@ -1,6 +1,12 @@
 FROM node:8.11
 ENV TZ=Europe/Oslo
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+# Install Java
+RUN wget -q https://download.java.net/java/GA/jdk10/10.0.1/fb4372174a714e6b8c52526dc134031e/10//openjdk-10.0.1_linux-x64_bin.tar.gz \
+  && tar xf openjdk-10*_bin.tar.gz \
+  && yes | rm openjdk-10*_bin.tar.gz
+ENV JAVA_HOME="/jdk-10.0.1/"
+ENV PATH="${JAVA_HOME}/bin:${PATH}"
 # Install dumb-init (Very handy for easier signal handling of SIGINT/SIGTERM/SIGKILL etc.)
 RUN wget https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64.deb \
  && dpkg -i dumb-init_*.deb
