@@ -8,6 +8,13 @@ RUN echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" | te
   && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886 \
   && echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections \
   && apt-get update && apt-get install -y oracle-java8-installer
+# Install Gradle
+ENV GRADLE_HOME="/home/node/.local/gradle-4.8.1"
+ENV PATH="${GRADLE_HOME}/bin:${PATH}"
+RUN mkdir -p /home/node/.local/ \
+  && wget -q -O gradle-4.8.1-bin.zip https://services.gradle.org/distributions/gradle-4.8.1-bin.zip?_ga=2.124233551.434846438.1530268329-532553301.1530268329 \
+  && apt-get update && apt-get -y install unzip \
+  && unzip -qq -d /home/node/.local gradle-4.8.1-bin.zip
 # Install dumb-init (Very handy for easier signal handling of SIGINT/SIGTERM/SIGKILL etc.)
 RUN wget https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64.deb \
  && dpkg -i dumb-init_*.deb
