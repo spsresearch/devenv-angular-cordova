@@ -20,13 +20,13 @@ RUN mkdir -p /home/node/.local/ \
   && apt-get update && apt-get -y install unzip \
   && unzip -qq -d /home/node/.local gradle-4.8.1-bin.zip
 # Install Android SDK
-ENV ANDROID_HOME="/home/node/.local/android-sdk-linux/"
+ENV ANDROID_SDK_ROOT="/home/node/.local/android-sdk-linux/"
 RUN mkdir -p /home/node/.local/ \
   && apt-get update && apt-get -y install unzip \
   && wget -q https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip \
-  && unzip -qq -d $ANDROID_HOME sdk-tools-linux-4333796.zip \
-  && yes | ${ANDROID_HOME}/tools/bin/sdkmanager --licenses \
-  && yes | ${ANDROID_HOME}/tools/bin/sdkmanager "platform-tools" "platforms;android-27" "build-tools;27.0.3"
+  && unzip -qq -d $ANDROID_SDK_ROOT sdk-tools-linux-4333796.zip \
+  && yes | ${ANDROID_SDK_ROOT}/tools/bin/sdkmanager --licenses \
+  && yes | ${ANDROID_SDK_ROOT}/tools/bin/sdkmanager "platform-tools" "platforms;android-28" "build-tools;28.0.3"
 # Install dumb-init (Very handy for easier signal handling of SIGINT/SIGTERM/SIGKILL etc.)
 RUN wget https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64.deb \
  && dpkg -i dumb-init_*.deb
